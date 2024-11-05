@@ -30,7 +30,7 @@ documents = [
 ]
 
 
-#  Collections SQL'deki tablolar, tablodaki row'larda buradaki documents olarak gecer!
+#  Collections are the tables in SQL, rows(instances) in a table are the documents in vectordb
 embeddings = OpenAIEmbeddings()
 
 vectorstore = Chroma.from_documents(

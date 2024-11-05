@@ -42,7 +42,7 @@ if __name__ == "__main__":
     
     
 """ 
-# Gelen cevabi streaming seklinde almak icin kullanilir
+# Use this if you want to take the answer as streaming
 
 if __name__ == "__main__":
     while True:
