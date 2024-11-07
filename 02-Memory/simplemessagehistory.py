@@ -25,6 +25,8 @@ prompt = ChatPromptTemplate.from_messages(
 )
 
 chain = prompt | model
+
+# this session id can be saved into a db
 config = {"configurable": {"session_id": "abcde123"}}
 with_message_history = RunnableWithMessageHistory(chain, get_session_history)
 

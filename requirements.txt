@@ -9,3 +9,8 @@ fastapi==0.111.1
 langserve==0.2.2
 sse_starlette==2.1.2
 langchain_chroma==0.1.2
+bs4==0.0.2
+faiss-cpu==1.8.0.post1
+tqdm==4.66.4
+tiktoken==0.7.0
+langchainhub==0.1.20

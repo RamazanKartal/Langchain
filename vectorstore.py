@@ -2,6 +2,10 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
+from langchain_openai import ChatOpenAI
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
+from langchain_core.prompts import ChatPromptTemplate
+
 
 load_dotenv()
 
@@ -38,10 +42,34 @@ vectorstore = Chroma.from_documents(
     embedding=embeddings
 )
 
+# we ask from retriever to run the similarity_search()
+retreiver = RunnableLambda(vectorstore.similarity_search).bind(k=1)
+model = ChatOpenAI(model="gpt-4o-mini")
+
+message = """
+Answer the question only with the provided context.
+
+{question}
+
+context: {context}
+
+"""
+
+prompt = ChatPromptTemplate.from_messages(
+    [("human", message)]
+)
+
+#RunnablePassthrough is a place holder for us, we will give the input later
+chain = {"context": retreiver, "question": RunnablePassthrough()} | prompt | model
+
+
 if __name__ == "__main__":
     #print(vectorstore.similarity_search("dog"))
     #embedding = OpenAIEmbeddings().embed_query("dog")
     #print(vectorstore.similarity_search_by_vector(embedding))
-    print(vectorstore.similarity_search_with_score("dog"))
+    #print(vectorstore.similarity_search_with_score("dog"))
+    
+    response = chain.invoke("tell me about birds")
+    print(response.content)
     
     
